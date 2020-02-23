@@ -1,0 +1,29 @@
+{% load qr_tags %}
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link href="ticket.css" rel="stylesheet">
+    <title>Board ticket</title>
+    <meta name="description" content="Board ticket">
+</head>
+
+<body>
+<div id="container">
+    <div class="row">
+        <div class="card">
+            <div class="name">{{ gallery.full_url }}</div>
+            <div class="qr">
+            {% qr_from_object gallery "s" %}
+                </div>
+        </div>
+        <div class="card">
+            <div class="name">{{ gallery.full_url }}</div>
+            <div class="qr">
+            {% qr_from_object gallery "s" %}
+                </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

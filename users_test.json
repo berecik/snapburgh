@@ -1,0 +1,22 @@
+[
+{
+  "model": "users.user",
+  "pk": 1,
+  "fields": {
+    "created_on": "2020-02-02T03:10:25.903Z",
+    "last_modified_on": "2020-02-02T03:10:25.903Z",
+    "email": "admin@example.com",
+    "tenant": 1
+  }
+},
+{
+  "model": "tenants.tenant",
+  "pk": 1,
+  "fields": {
+    "schema_name": "test",
+    "created_on": "2020-02-02T03:10:25.901Z",
+    "last_modified_on": "2020-02-02T03:10:25.902Z",
+    "name": "test"
+  }
+}
+]
