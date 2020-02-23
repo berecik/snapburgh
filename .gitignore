@@ -2,7 +2,7 @@
 .idea/
 
 # local settings
-__*
+__*.env
 dist
 node_modules
 
