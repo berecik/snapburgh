@@ -1,0 +1,19 @@
+{% load static %}
+<!doctype html>
+<html lang=en>
+<head>
+    {% block head %}
+        <title>Snapburg</title>
+    {% endblock head %}
+
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link rel=icon type=image/gif href="{% static 'img/favicon.gif' %}">
+    <link href="{% static 'react/main.css' %}" rel="stylesheet">
+</head>
+<body>
+    <div id=root></div>
+    <script type="text/javascript" src="{% static 'react/bundle.js' %}"></script>
+</body>
+</html>
