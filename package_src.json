@@ -1,0 +1,31 @@
+{
+  "name": "snapburg",
+  "version": "1.0.0",
+  "private": true,
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack --config webpack.config.js --progress --colors --mode development",
+    "watch": "webpack --config webpack.config.js --watch --mode development"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/berecik/snapburg.git"
+  },
+  "keywords": [
+    "photo",
+    "gallery",
+    "buskets",
+    "django",
+    "react"
+  ],
+  "author": {
+    "name": "Adam Beret Manczuk",
+    "url": "https://hipsi.org.pl"
+  },
+  "bugs": {
+    "url": "https://github.com/berecik/snapburg/issues"
+  },
+  "homepage": "https://snapburg.com",
+  "devDependencies": {},
+  "dependencies": {}
+}

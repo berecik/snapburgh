@@ -14,39 +14,46 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include, re_path
-
-from rest_framework import permissions
-from drf_yasg.views import get_schema_view
+from django.urls import include
+from django.urls import path
+from django.urls import re_path
+from django.conf import settings
+from django.conf.urls.static import static
 from drf_yasg import openapi
-# from qr_code import urls as qr_code_urls
+from drf_yasg.views import get_schema_view
+from rest_framework import permissions
 
+from apps.galleries.views import SnapGalleryView
+from common.random_code import CHARS
 from .api_urls import rest_api_router
-from apps.galleries.views import SnapGalleryView, gallery_ticket
+
 
 schema_view = get_schema_view(
-   openapi.Info(
-      title="SnapBurg API",
-      default_version='v1',
-      description="Internet market to shell a photos and related services.",
-      terms_of_service="https://www.google.com/policies/terms/",
-      contact=openapi.Contact(email="beret@hipisi.org.pl"),
-      license=openapi.License(name="GNU 3.0 License"),
-   ),
-   public=True,
-   permission_classes=(permissions.AllowAny,),
+    openapi.Info(
+        title="SnapBurg API",
+        default_version='v1',
+        description="Internet shop, to sell the copyright of photos and services related with photos.",
+        terms_of_service="https://www.google.com/policies/terms/",
+        contact=openapi.Contact(email="beret@hipisi.org.pl"),
+        license=openapi.License(name="GNU 3.0 License"),
+    ),
+    public=True,
+    permission_classes=(permissions.AllowAny,),
 )
-
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # path('qr_code/', include(qr_code_urls, namespace="qr_code")),
     path('api/', include(rest_api_router.urls)),
     path('api-auth/', include('rest_framework.urls')),
 
     re_path(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
-    path('<str:code>', SnapGalleryView.as_view, name='snapburg-gallery'),
-    path('ticket/', gallery_ticket, name='gallery-ticket')
-]
+
+    path('snaps/', include('apps.snaps.urls')),
+    path('galleries/', include('apps.galleries.urls')),
+
+    re_path(f"^(?P<code>[{CHARS}]+)$", SnapGalleryView.as_view(), name='snapburg-gallery'),
+] \
+              + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) \
+              + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

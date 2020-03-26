@@ -4,7 +4,7 @@ RUN apk update && apk add --no-cache npm
 ADD package.json /js/
 RUN npm install .
 ADD webpack.config.js /js/
-ADD src/ /js/src/
+ADD js /js/src/
 
 FROM webpack-base AS webpack
 RUN npm run build

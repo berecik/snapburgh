@@ -1,23 +1,56 @@
+# django and core packages
 Django
-Pillow
-djangorestframework
 psycopg2
 pytz
-sqlparse
-python-memcached
 django-extensions
-django-jquery
-django-rest-swagger
-django-filter
-markdown
-django-jsonfield
-#django-taggit
-environs
-drf-yasg
+python-memcached
+environs # simplified environment variable parsing
+django-middleware-global-request # global access to request
+
+# database extension
+django-jsonfield # json storage for postgres
+django-taggit # tags managing
+django-tenant-schemas # database schemas for tenant
+sqlparse
+
+# webpack and react
+django-webpack-loader
+
+# picture and print manage
+Pillow
 #django-photologue
-django-qrcode
-django-bootstrap4
 fpdf
 django-imagekit
 WeasyPrint
-django-middleware-global-request
+django-qrcode
+
+# rest framework
+djangorestframework
+markdown # Markdown support for the browsable API
+coreapi # Schema generation support.
+Pygments # Add syntax highlighting to Markdown processing.
+django-guardian # Object level permissions support.
+django-taggit-serializer # for correct working taggit with rest framework
+drf-yasg # next generation of swagger
+drf-flex-fields # expandable fields
+django-filter # Filtering support
+django-rest-framework-condition # codition decorator for django rest
+
+# file storage
+boto3 # AWS service API library
+moto  # mock AWS servises for tests
+django-storages
+
+# extra functionality
+awesome-slugify # create secure files name
+
+# Google Login With JWT
+djangorestframework_simplejwt # we need JWT – check GCP Endpoints header
+requests # need for tests and JWT token download
+
+# generate documentation
+Sphinx
+Markdown
+
+# celery staff
+celery

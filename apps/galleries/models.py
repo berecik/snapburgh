@@ -1,78 +1,75 @@
 import uuid
-from common.random_code import get_code
 
+from django.core.exceptions import ObjectDoesNotExist
+from django.core.exceptions import RequestAborted
 from django.db import models
 from django.urls import reverse
-from django.core.exceptions import ObjectDoesNotExist
+from common.middleware import get_request
 
-from django_global_request.middleware import get_request
+from common.random_code import get_code
+from common.models import CreatedMixin
 
 
-class SnapGallery(models.Model):
-
-    # This is secret key to find gallery
-    key = models.UUIDField(primary_key=True, editable=False)
+class SnapGallery(models.Model, CreatedMixin):
+    # Secret key to find gallery
+    code = models.CharField(max_length=8, primary_key=True, editable=False)
 
     class Meta:
-        @property
-        def next_gallery(cls):
-            gallery = cls()
-            gallery.save()
-            return gallery
-
-    def __init__(self):
-        super().__init__()
-        self.full_url = self.get_url()
+        pass
 
     @classmethod
-    def is_key_unique(cls, key):
-        return cls.objects.filter(key=key).count() == 0
+    def get_code(cls):
+        """
+        generate unique code for a new object
+        :return: code value for a new gallery
+        """
+        code = get_code(count=cls.objects.count())
+        if cls.is_unique(code=code):
+            return code
+        else:
+            return cls.get_code()
 
-    def url_for_code(self, code):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if not self.pk:
+            self.code = self.get_code()
+
+    @classmethod
+    def galleries(cls, amount):
+        for i in range(amount):
+            gallery = cls()
+            yield gallery
+            gallery.save()
+
+    @property
+    def url(self):
+        return self.url_for_code(self.code)
+
+    @classmethod
+    def is_unique(cls, code):
+        return not cls.objects.filter(code=code).exists()
+
+    @classmethod
+    def url_for_code(cls, code):
         request = get_request()
         url = reverse('snapburg-gallery', kwargs={'code': code})
-        self.url = url
         if request is not None:
             url = request.build_absolute_uri(url)
         return url
 
     @classmethod
-    def uuid_for_url(cls, url):
-        return uuid.uuid5(uuid.NAMESPACE_URL, url)
-
-    @classmethod
     def by_code(cls, code, queryset=None):
-        _url = cls.url_for_code(code)
-        _key = cls.uuid_for_url(_url)
 
         if queryset is None:
-            queryset = cls.objects.all()
+            queryset = cls.objects
+
         try:
-            return queryset.get(key=_key)
+            return queryset.get(code=code)
         except ObjectDoesNotExist:
             return None
 
-    def get_url(self):
-
-        def __gen_code():
-            code = get_code(count=SnapGallery.objects.count())
-            _url = self.url_for_code(code)
-            _key = self.uuid_for_url(_url)
-            if self.is_key_unique(key=_key):
-                return _url, _key
-            else:
-                return __gen_code()
-
-        url, key = __gen_code()
-        self.key = key
-
-        return url
-
     def get_absolute_url(self):
-        if self.url:
-            return self.url
-        else:
-            raise Exception("NO URL FOR GALLERY")
+        return self.url
 
     def __str__(self):
-        return self.key
+        return self.url

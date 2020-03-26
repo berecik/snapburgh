@@ -23,7 +23,7 @@ services:
         python3 manage.py migrate
         python3 manage.py shell <<EOF
         from django.contrib.auth.models import User
-        User.objects.create_superuser('\''beret'\'', '\''beret@hipisi.org.pl'\'', '\''6649beret'\'')"
+        User.objects.create_superuser('\''beret'\'', '\''beret@hipisi.org.pl'\'', '\''beret'\'')"
         EOF
         touch .prepared
     env_file: docker-compose.env
@@ -40,7 +40,7 @@ services:
       - run
       - watch
     volumes:
-      - ./src:/js/src
+      - ./js:/js/js
       - dist:/js/dist
     ports:
       - "9000:9000"

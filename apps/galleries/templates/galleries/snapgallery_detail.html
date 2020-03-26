@@ -1,0 +1,16 @@
+{% load render_bundle from webpack_loader %}
+<!DOCTYPE html>
+<html>
+ <head>
+ <meta charset="UTF-8">
+ <title>Gallery</title>
+ </head>
+ <body>
+ <div id="react"></div>
+ <script>
+  window.gallery = {{ gallery|safe }};
+  window.react_mount = document.getElementById('react');
+</script>
+ {% render_bundle 'main' %}
+ </body>
+</html>

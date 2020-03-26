@@ -3,12 +3,14 @@
 
 # local settings
 __*.env
+
+# local js files
 dist/
-
-static/react/*.*
-
-node_modules/
-package-lock.json
+dist/*.*
+/node_modules/
+/package-lock.json
+/package.json
+/webpack-stats.json
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -252,4 +254,3 @@ dist
 
 # Stores VSCode versions used for testing VSCode extensions
 .vscode-test
-

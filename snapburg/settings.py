@@ -9,21 +9,13 @@ https://docs.djangoproject.com/en/2.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.2/ref/settings/
 """
-import os
 import getpass
 import json
+import os
 
-# Local settings environment, here simple as is possible
-# in future should be based on environment variables
-
-try:
-    from _local_settings import *
-except ImportError as e:
-    pass
+from common.base_dir import project_root_join
 
 MAIN_URL = "http://osia.hipisi.org.pl"
-
-from common.base_dir import root
 
 # Application definition
 
@@ -43,7 +35,7 @@ INSTALLED_APPS = [
     'drf_yasg',
     'qrcode',
     'imagekit',
-    'django_global_request',
+    'webpack_loader',
 
     # 'taggit',
     # 'photologue',
@@ -60,7 +52,7 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django_global_request.middleware.GlobalRequestMiddleware',
+    'common.middleware.global_request_middleware',
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
@@ -104,11 +96,11 @@ STATICFILES_FINDERS = (
 )
 
 STATICFILES_DIRS = [
-    root("static"),
-    root("dist"),
+    project_root_join("static"),
+    project_root_join("dist"),
 ]
 
-MEDIA_ROOT = root('media')
+MEDIA_ROOT = project_root_join('media')
 MEDIA_URL = '/media/'
 
 SITE_ID = 1
@@ -132,7 +124,7 @@ TEMPLATES = [
         'BACKEND':  'django.template.backends.django.DjangoTemplates',
         'APP_DIRS': True,
         'DIRS':     [
-            root('templates'),
+            project_root_join('templates'),
         ],
         'OPTIONS':  {
             'debug':              DEBUG,
@@ -180,3 +172,18 @@ SWAGGER_SETTINGS = {
 }
 
 TAGGIT_CASE_INSENSITIVE = True
+
+WEBPACK_LOADER = {
+    'DEFAULT': {
+        'BUNDLE_DIR_NAME': 'dist/',
+        'STATS_FILE':      'webpack-stats.json',
+    }
+}
+
+# Local settings environment, here simple as is possible
+# in future should be based on environment variables
+
+try:
+    from _local_settings import *
+except ImportError as e:
+    pass

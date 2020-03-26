@@ -1,5 +1,5 @@
-from random import choice
 import math
+from random import choice
 
 CHARS = '23456789abcdefghijkmnrstuvwxyz'
 CHARS_LEN = len(CHARS)
@@ -12,5 +12,5 @@ def get_code(length=None, count=None):
 
 
 def code_len(count):
-    count = max(count, CHARS_LEN+1)
+    count = max(count, CHARS_LEN + 1)
     return int(math.log(count, CHARS_LEN)) + 1
