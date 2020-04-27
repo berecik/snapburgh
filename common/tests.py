@@ -13,6 +13,15 @@ ACTIONS = {
     'post': 'create',
 }
 
+METHODS = {
+    'retrieve':'get',
+    'list': 'get',
+    'update': 'put',
+    'partial_update': 'patch',
+    'destroy': 'delete',
+    'create': 'post',
+}
+
 
 class RestApiRequestFactory(RequestFactory):
 
@@ -86,12 +95,12 @@ class RestApiTestCase(TestCase):
         return RestApiRequestFactory(basename=self.basename)
 
     def action_test(self,
-                    method="get",
+                    action="list",
                     pk=None,
                     data=None,
                     kwargs=None,
                     path=None,
-                    action=None,
+                    method=None,
                     factory_data=None,
                     **extra):
 
@@ -106,7 +115,7 @@ class RestApiTestCase(TestCase):
             if data is not None:
                 factory_data = data.items()
 
-        if action is None:
+        if method is None:
 
             action = ACTIONS[method]
 

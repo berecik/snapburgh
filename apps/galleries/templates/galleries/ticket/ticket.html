@@ -3,27 +3,75 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <link href="ticket.css" rel="stylesheet">
+    <style>
+        @page {
+            margin: 0;
+            size: portrait;
+        }
+
+        html {
+            align-content: center;
+            align-items: center;
+            background: #ffffff;
+            display: flex;
+            font-family: "Barlow Condensed", sans-serif;
+            height: 100%;
+            justify-content: center;
+        }
+
+        html body {
+            background: #fff;
+            box-sizing: border-box;
+            color: #2A3239;
+            display: flex;
+            flex-wrap: wrap;
+        {#height: 8cm;#} justify-content: space-between;
+            margin: 0;
+        {#width: 25cm;#}
+        }
+
+        html body .container {
+            box-sizing: border-box;
+            box-sizing-display: flex;
+            box-sizing-align-content: center;
+            box-sizing-justify-content: space-between;
+        }
+
+        html body .container .row {
+            height: 100%;
+            box-sizing: border-box;
+        }
+
+        html body .container .row .card {
+            box-sizing: border-box;
+            height: 50%;
+            display: flex;
+            align-content: center;
+            justify-content: space-between;
+            border: solid black 1px;
+        }
+    </style>
     <title>Board ticket</title>
     <meta name="description" content="Board ticket">
 </head>
-
 <body>
-<div id="container">
-    <div class="row">
-        <div class="card">
-            <div class="name">{{ gallery.full_url }}</div>
-            <div class="qr">
-            {% qr_from_object gallery "s" %}
-                </div>
-        </div>
-        <div class="card">
-            <div class="name">{{ gallery.full_url }}</div>
-            <div class="qr">
-            {% qr_from_object gallery "s" %}
-                </div>
-        </div>
-    </div>
-</div>
+<table id="container">
+    {% for galleries in rows %}
+        <tr class="row">
+            {% for gallery in galleries %}
+                <td class="card">
+                    <table>
+                        <tr>
+                            <td class="name">{{ gallery.url }}</td>
+                            <td class="qr">
+                                {% qr_from_object gallery "s" %}
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            {% endfor gallery %}
+        </tr>
+    {% endfor galleries %}
+</table>
 </body>
 </html>

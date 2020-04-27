@@ -31,7 +31,7 @@ from .api_urls import rest_api_router
 schema_view = get_schema_view(
     openapi.Info(
         title="SnapBurg API",
-        default_version='v1',
+        default_version="v1",
         description="Internet shop, to sell the copyright of photos and services related with photos.",
         terms_of_service="https://www.google.com/policies/terms/",
         contact=openapi.Contact(email="beret@hipisi.org.pl"),

@@ -7,7 +7,8 @@ cp -v package_src.json package.json
 npm i -S react react-dom
 
 # Flickity component for pictures carousel
-npm i -S flickity react-flickity-component
+# currently unused
+# npm i -S flickity react-flickity-component
 
 # Webpack
 npm i -D webpack webpack-cli webpack-bundle-tracker
@@ -22,3 +23,7 @@ npm i -D babel-core babel-preset-env babel-preset-react
 
 # SASS and style loader
 npm i -D node-sass sass-loader style-loader css-loader mini-css-extract-plugin sass
+
+# React translation support https://github.com/i18next/react-i18next
+npm i -S react-i18next
+npm i -D babel-plugin-i18next-extract

@@ -1,8 +1,12 @@
-# pyCharm files
-.idea/
-
 # local settings
-__*.env
+.*
+!.babelrc
+!.coveragerc
+!.dockerignore
+!.github
+!.gitignore
+
+local_settings.py
 
 # local js files
 dist/
@@ -11,6 +15,17 @@ dist/*.*
 /package-lock.json
 /package.json
 /webpack-stats.json
+/js/sass/main.css
+/js/sass/main.css.map
+
+# testing and deploying
+coverage/
+*\.egg*
+
+# data
+/media/
+/static/
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
