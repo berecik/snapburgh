@@ -36,7 +36,7 @@ class SnapGallery(models.Model, CreatedMixin):
 
     @classmethod
     def galleries(cls, amount):
-        for i in range(amount):
+        for _ in range(amount):
             gallery = cls()
             yield gallery
             gallery.save()

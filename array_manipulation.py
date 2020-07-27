@@ -9,7 +9,7 @@ import sys
 # Complete the isValid function below.
 def highestValuePalindrome(s, n, k):
     arr = [c for c in s]
-    for i in range(0, n // 2):
+    for i in range(n // 2):
         if arr[i] != arr[n - i - 1]:
             if k:
                 k -= 1

@@ -31,10 +31,7 @@ class RestApiRequestFactory(RequestFactory):
 
     def get_path(self, path, pk, **kwargs):
         if path is None:
-            if pk is None:
-                path = "list"
-            else:
-                path = "detail"
+            path = "list" if pk is None else "detail"
         if pk is not None:
             kwargs["pk"] = pk
         return reverse(f"{self.basename}-{path}", kwargs=kwargs)
@@ -111,17 +108,15 @@ class RestApiTestCase(TestCase):
             factory_data = json.dumps(data)
             extra["content_type"] = 'application/json'
 
-        if method == "get":
-            if data is not None:
-                factory_data = data.items()
+        if method == "get" and data is not None:
+            factory_data = data.items()
 
         if method is None:
 
             action = ACTIONS[method]
 
-            if method == "get":
-                if pk is None:
-                    action = "list"
+            if method == "get" and pk is None:
+                action = "list"
 
             if path is not None:
                 action = path
@@ -129,5 +124,4 @@ class RestApiTestCase(TestCase):
         factory = self.request_factory()
         request = getattr(factory, method)(pk=pk, data=factory_data, path=path, kwargs=kwargs, **extra)
         view = self.viewset.as_view({method: action})
-        response = view(request, pk=pk)
-        return response
+        return view(request, pk=pk)
