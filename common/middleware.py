@@ -10,8 +10,7 @@ def global_request_middleware(get_response):
 
     def process_request(request):
         GLOBAL_REQUEST.request = request
-        response = get_response(request)
-        return response
+        return get_response(request)
 
     return process_request
 
